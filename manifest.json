@@ -13,7 +13,9 @@
     "service_worker": "service-worker.js",
     "type": "module"
   },
-  "action": {},
+  "action": {
+    "default_popup": "index.html"
+  },
   "permissions": ["scripting"],
   "host_permissions": ["<all_urls>"]
 }
