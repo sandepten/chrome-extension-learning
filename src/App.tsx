@@ -1,8 +1,16 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
+  const [originalColor, setOriginalColor] = useState<string | null>(null);
+  const [newColor, setNewColor] = useState<string | null>(null);
+
+  useEffect(() => {
+    chrome.storage.local.get(['originalColor'], (result) => {
+      setOriginalColor(result.originalColor || null);
+    });
+  }, []);
+
   const onClick = async () => {
     const [tab] = await chrome.tabs.query({
       active: true,
@@ -10,29 +18,37 @@ function App() {
     });
     chrome.scripting.executeScript({
       target: { tabId: tab.id! },
-      func: () => {
-        alert("Hello from the injected script!");
+      func: (newColor) => {
+        const currentColor = document.body.style.backgroundColor;
+        chrome.storage.local.set({ originalColor: currentColor || 'white' });
+        document.body.style.backgroundColor = newColor || "white";
       },
+      args: [newColor]
+    });
+  };
+
+  const onReset = async () => {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    });
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id! },
+      func: (originalColor) => {
+        document.body.style.backgroundColor = originalColor || 'white';
+      },
+      args: [originalColor]
     });
   };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+      <h2>Background Changer</h2>
       <div className="card">
-        <button onClick={onClick}>Click me</button>
+        <input type="color" onChange={(e) => setNewColor(e.target.value)} />
+        <button onClick={onClick}>Set Color</button>
+        <button onClick={onReset}>Reset</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }

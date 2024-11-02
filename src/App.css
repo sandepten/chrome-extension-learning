@@ -34,7 +34,80 @@
 }
 
 .card {
-  padding: 2em;
+  padding: 2.5em;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border-radius: 16px;
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.1),
+    0 6px 6px rgba(0, 0, 0, 0.06),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.03);
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin: 2rem auto;
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.12),
+    0 8px 8px rgba(0, 0, 0, 0.08),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.card input[type="color"] {
+  width: 70px;
+  height: 45px;
+  padding: 0;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card input[type="color"]:hover {
+  transform: scale(1.05);
+}
+
+.card button {
+  background: linear-gradient(145deg, #646cff, #535bf2);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(100, 108, 255, 0.3);
+  min-width: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card button:hover {
+  background: linear-gradient(145deg, #535bf2, #4147d5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(100, 108, 255, 0.4);
+}
+
+.card button:active {
+  transform: translateY(1px);
+}
+
+.card button:last-child {
+  background: linear-gradient(145deg, #ff6464, #f25353);
+  box-shadow: 0 2px 4px rgba(255, 100, 100, 0.3);
+}
+
+.card button:last-child:hover {
+  background: linear-gradient(145deg, #f25353, #e64444);
+  box-shadow: 0 4px 8px rgba(255, 100, 100, 0.4);
 }
 
 .read-the-docs {
